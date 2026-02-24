@@ -39,6 +39,7 @@ final class SettingsRegistrar {
 	 */
 	public function register_hooks(): void {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'update_option_' . self::OPTION_NAME, array( $this, 'handle_endpoint_change' ), 10, 2 );
 	}
 
 	/**
@@ -317,13 +318,60 @@ final class SettingsRegistrar {
 		$sanitized['rate_limit_requests'] = max( 1, absint( $input['rate_limit_requests'] ?? 60 ) );
 		$sanitized['rate_limit_window']   = max( 10, absint( $input['rate_limit_window'] ?? 60 ) );
 
-		// Flush rewrite rules if endpoint setting changed.
-		$old_settings = get_option( self::OPTION_NAME, array() );
-		if ( ( $old_settings['endpoint_md'] ?? false ) !== $sanitized['endpoint_md'] ) {
-			flush_rewrite_rules();
+		return $sanitized;
+	}
+
+	/**
+	 * Flush rewrite rules after the endpoint_md setting is saved.
+	 *
+	 * Fires on `update_option_{option_name}`, which is AFTER WordPress saves
+	 * the new value.  At this point we can safely register the rewrite rules
+	 * (so they are present in $wp_rewrite) before calling flush_rewrite_rules().
+	 *
+	 * @param array<string, mixed> $old_value Previous setting values.
+	 * @param array<string, mixed> $new_value New setting values.
+	 *
+	 * @return void
+	 */
+	public function handle_endpoint_change( array $old_value, array $new_value ): void {
+		if ( ( $old_value['endpoint_md'] ?? false ) === ( $new_value['endpoint_md'] ?? false ) ) {
+			return;
 		}
 
-		return $sanitized;
+		if ( $new_value['endpoint_md'] ?? false ) {
+			// Register the rules now so they are included in the flush.
+			add_rewrite_rule(
+				'^(.+)\.md/?$',
+				'index.php?pagename=$matches[1]&jetstaa_mna_format=markdown',
+				'top'
+			);
+
+			add_rewrite_rule(
+				'^(.+)\.md/?$',
+				'index.php?name=$matches[1]&jetstaa_mna_format=markdown',
+				'top'
+			);
+
+			// Custom post types.
+			$post_types = (array) ( $new_value['post_types'] ?? array( 'post', 'page' ) );
+			foreach ( $post_types as $post_type ) {
+				if ( in_array( $post_type, array( 'post', 'page' ), true ) ) {
+					continue;
+				}
+
+				$post_type_obj = get_post_type_object( $post_type );
+				if ( $post_type_obj && $post_type_obj->rewrite ) {
+					$slug = $post_type_obj->rewrite['slug'] ?? $post_type;
+					add_rewrite_rule(
+						sprintf( '^%s/(.+)\.md/?$', preg_quote( $slug, '/' ) ),
+						sprintf( 'index.php?post_type=%s&name=$matches[1]&jetstaa_mna_format=markdown', $post_type ),
+						'top'
+					);
+				}
+			}
+		}
+
+		flush_rewrite_rules();
 	}
 
 	/**

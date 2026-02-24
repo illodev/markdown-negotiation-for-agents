@@ -21,8 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `patchwork.json` — Patchwork configuration for mocking PHP built-in functions in unit tests
 - `tests/Unit/Http/ResponseHandlerTest.php` — Unit tests for `ResponseHandler` security validations
 - `docs/screenshots/` — Visual documentation: HTML response, plugin admin, settings page, metabox, Markdown output, and REST API endpoints
+- `tests/Unit/Admin/SettingsRegistrarTest.php` — Unit tests for `handle_endpoint_change()` covering enabled/disabled/CPT scenarios
 
 ### Fixed
+
+- `.md` URL endpoint returning 404: `flush_rewrite_rules()` was called inside the sanitize callback (before the new settings were saved), so the rules were flushed without the `.md` rewrite rules being registered. Fixed by moving the flush to `update_option_{option}` action, which fires after the save and where rules can be added beforehand.
 
 - `ObjectCacheDriver::is_available()` returning `null` instead of `bool`, causing a PHP 8.1 TypeError on plugin activation when no external object cache is configured
 - `ResponseHandler::handle_request()` silently ignoring malformed `Accept` headers instead of returning HTTP 400; oversized or null-byte-injected headers now correctly return `400 Bad Request`

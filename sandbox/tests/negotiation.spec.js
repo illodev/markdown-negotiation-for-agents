@@ -144,6 +144,20 @@ test.describe("HTTP Content Negotiation", () => {
 		console.log("✅ ?format=markdown query parameter works");
 	});
 
+	test("Single post .md URL extension returns Markdown", async ({
+		request,
+	}) => {
+		const { link } = await getPostUrl(request);
+		// Strip trailing slash, append .md
+		const mdUrl = link.replace(/\/$/, "") + ".md";
+		const res = await request.get(mdUrl);
+		expect(res.status()).toBe(200);
+		expect(res.headers()["content-type"]).toContain("text/markdown");
+		const body = await res.text();
+		expect(body).not.toMatch(/<html/i);
+		console.log("✅ .md URL extension works");
+	});
+
 	test("REST API /jetstaa-mna/v1/markdown/:id returns markdown field", async ({
 		request,
 	}) => {
