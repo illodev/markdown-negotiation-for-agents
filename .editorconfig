@@ -1,0 +1,54 @@
+# EditorConfig — https://editorconfig.org
+# Enforces consistent coding style across editors and IDEs.
+
+root = true
+
+# Global defaults
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# PHP files
+[*.php]
+indent_style = tab
+indent_size = 4
+
+# XML / HTML
+[*.{xml,html,xhtml}]
+indent_style = tab
+indent_size = 2
+
+# JSON
+[*.json]
+indent_style = space
+indent_size = 2
+insert_final_newline = false
+
+# YAML
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Markdown — preserve trailing spaces (two spaces = line break)
+[*.{md,txt}]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+
+# CSS / JS / SCSS
+[*.{css,scss,js}]
+indent_style = tab
+indent_size = 4
+
+# Composer / npm manifests
+[{composer,package}.json]
+indent_style = space
+indent_size = 2
+
+# Makefile requires real tabs
+[Makefile]
+indent_style = tab
