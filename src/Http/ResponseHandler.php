@@ -70,6 +70,7 @@ final class ResponseHandler {
 
 		// Validate the request is safe.
 		if ( ! $this->header_validator->validate_request() ) {
+			$this->send_error_response( 400, 'Bad Request: malformed Accept header' );
 			return;
 		}
 

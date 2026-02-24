@@ -3,12 +3,29 @@
   "description": "Content negotiation plugin for WordPress that serves Markdown to AI agents and tools via Accept header.",
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
+  "keywords": [
+    "wordpress",
+    "wordpress-plugin",
+    "markdown",
+    "content-negotiation",
+    "ai",
+    "llm",
+    "rest-api"
+  ],
+  "homepage": "https://github.com/illodev/markdown-negotiation-for-agents",
   "authors": [
     {
       "name": "illodev",
-      "email": "hello@illodev.com"
+      "email": "hello@illodev.com",
+      "homepage": "https://github.com/illodev",
+      "role": "Developer"
     }
   ],
+  "support": {
+    "issues": "https://github.com/illodev/markdown-negotiation-for-agents/issues",
+    "source": "https://github.com/illodev/markdown-negotiation-for-agents",
+    "docs": "https://github.com/illodev/markdown-negotiation-for-agents#readme"
+  },
   "minimum-stability": "stable",
   "prefer-stable": true,
   "require": {

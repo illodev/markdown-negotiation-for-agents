@@ -1,0 +1,8 @@
+{
+  "redefinable-internals": [
+    "http_response_code",
+    "header",
+    "header_remove",
+    "headers_sent"
+  ]
+}
