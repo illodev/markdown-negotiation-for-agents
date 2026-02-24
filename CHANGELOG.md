@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `sandbox/` — Docker-based WordPress sandbox with Playwright E2E test suite (18 tests)
 - `patchwork.json` — Patchwork configuration for mocking PHP built-in functions in unit tests
 - `tests/Unit/Http/ResponseHandlerTest.php` — Unit tests for `ResponseHandler` security validations
+- `docs/screenshots/` — Visual documentation: HTML response, plugin admin, settings page, metabox, Markdown output, and REST API endpoints
 
 ### Fixed
 
