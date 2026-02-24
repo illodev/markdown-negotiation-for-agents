@@ -9,3 +9,13 @@ Thumbs.db
 phpunit.xml
 phpcs.xml
 composer.lock
+
+# Sandbox
+/sandbox/wordpress-data/
+/sandbox/mysql-data/
+/sandbox/node_modules/
+/sandbox/playwright-report/
+/sandbox/test-results/
+
+# Playwright mcp
+.playwright-mcp
