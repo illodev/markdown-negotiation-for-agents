@@ -71,7 +71,8 @@ final class ObjectCacheDriver implements CacheInterface {
 	 */
 	public function is_available(): bool {
 		// Check if a persistent object cache is available.
-		return wp_using_ext_object_cache();
+		// Cast to bool in case wp_using_ext_object_cache() returns null on some setups.
+		return (bool) wp_using_ext_object_cache();
 	}
 
 	/**
