@@ -1,0 +1,92 @@
+/**
+ * Markdown Negotiation for Agents - Admin Styles.
+ *
+ * @package IlloDev\MarkdownNegotiation
+ */
+
+/* Settings page layout */
+.jetstaa-mna-admin-header {
+  background: #fff;
+  border: 1px solid #ccd0d4;
+  border-left: 4px solid #0073aa;
+  padding: 12px 16px;
+  margin: 16px 0;
+}
+
+.jetstaa-mna-admin-header p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Status bar */
+.jetstaa-mna-status-bar {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin: 16px 0;
+  padding: 10px 16px;
+  background: #f0f0f1;
+  border-radius: 4px;
+}
+
+.jetstaa-mna-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.jetstaa-mna-status::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.jetstaa-mna-status.active::before {
+  background: #00a32a;
+}
+
+.jetstaa-mna-status.inactive::before {
+  background: #d63638;
+}
+
+.jetstaa-mna-cache-info {
+  font-size: 13px;
+  color: #646970;
+}
+
+/* Quick test section */
+.wrap code {
+  display: block;
+  padding: 10px 14px;
+  margin: 8px 0;
+  background: #1d2327;
+  color: #50c878;
+  border-radius: 4px;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Settings form enhancements */
+.form-table th {
+  width: 250px;
+}
+
+.form-table td label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Meta box */
+#jetstaa-mna-settings .inside {
+  padding: 6px 12px 12px;
+}
+
+#jetstaa-mna-settings .inside label {
+  display: block;
+  margin-bottom: 8px;
+}
