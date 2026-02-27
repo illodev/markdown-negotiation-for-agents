@@ -22,6 +22,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Converter;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Contracts\ConverterInterface;
 use League\HTMLToMarkdown\HtmlConverter;
 use League\HTMLToMarkdown\Converter\TableConverter;

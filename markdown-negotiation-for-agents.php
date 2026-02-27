@@ -159,8 +159,13 @@ register_deactivation_hook( __FILE__, static function (): void {
 
 	// Clean up transients.
 	global $wpdb;
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Bulk cleanup on deactivation.
 	$wpdb->query(
-		"DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_jetstaa_mna_%' OR option_name LIKE '_transient_timeout_jetstaa_mna_%'"
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
+			'_transient_jetstaa_mna_%',
+			'_transient_timeout_jetstaa_mna_%'
+		)
 	);
 } );
 

@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Cache;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Contracts\CacheInterface;
 
 /**
@@ -103,12 +107,13 @@ final class FileCacheDriver implements CacheInterface {
 		$deleted = true;
 
 		if ( file_exists( $file ) ) {
-			$deleted = unlink( $file );
+			wp_delete_file( $file );
+			$deleted = ! file_exists( $file );
 		}
 
 		$meta_file = $file . '.meta';
 		if ( file_exists( $meta_file ) ) {
-			unlink( $meta_file );
+			wp_delete_file( $meta_file );
 		}
 
 		return $deleted;
@@ -130,7 +135,7 @@ final class FileCacheDriver implements CacheInterface {
 
 		foreach ( $files as $file ) {
 			if ( is_file( $file ) ) {
-				unlink( $file );
+				wp_delete_file( $file );
 			}
 		}
 
@@ -142,7 +147,20 @@ final class FileCacheDriver implements CacheInterface {
 	 */
 	public function is_available(): bool {
 		$this->ensure_cache_dir();
-		return is_dir( $this->cache_dir ) && is_writable( $this->cache_dir );
+
+		if ( ! is_dir( $this->cache_dir ) ) {
+			return false;
+		}
+
+		$test_file = $this->cache_dir . '.write-test';
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+		$result = file_put_contents( $test_file, '' );
+		if ( false !== $result ) {
+			wp_delete_file( $test_file );
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

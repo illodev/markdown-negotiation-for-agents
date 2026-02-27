@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Security;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class RateLimiter
  *
@@ -55,7 +59,9 @@ final class RateLimiter {
 	 */
 	public function check_rate_limit(): void {
 		// Only rate-limit Markdown requests.
-		$accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+		$accept = isset( $_SERVER['HTTP_ACCEPT'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_ACCEPT'] ) )
+			: '';
 		if ( ! str_contains( $accept, 'text/markdown' ) && ! str_contains( $accept, 'text/x-markdown' ) ) {
 			return;
 		}
@@ -153,7 +159,9 @@ final class RateLimiter {
 		$headers = apply_filters( 'jetstaa_mna_trusted_proxy_headers', $headers );
 
 		foreach ( $headers as $header ) {
-			$value = $_SERVER[ $header ] ?? '';
+			$value = isset( $_SERVER[ $header ] )
+				? sanitize_text_field( wp_unslash( $_SERVER[ $header ] ) )
+				: '';
 			if ( ! empty( $value ) ) {
 				// X-Forwarded-For may contain multiple IPs; use the first.
 				$ip = trim( explode( ',', $value )[0] );
@@ -163,6 +171,8 @@ final class RateLimiter {
 			}
 		}
 
-		return $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+		return isset( $_SERVER['REMOTE_ADDR'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
+			: '127.0.0.1';
 	}
 }

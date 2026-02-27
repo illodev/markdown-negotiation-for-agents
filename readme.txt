@@ -1,7 +1,7 @@
 === Markdown Negotiation for Agents ===
 Contributors: illodev
 Donate link: https://illodev.com
-Tags: markdown, ai, agents, content-negotiation, llm, api
+Tags: markdown, ai, agents, content-negotiation, api
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.1

@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Converter;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Contracts\SanitizerInterface;
 use WP_Post;
 

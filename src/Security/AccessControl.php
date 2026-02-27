@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Security;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Admin\MetaBox;
 use WP_Post;
 
@@ -95,7 +99,9 @@ final class AccessControl {
 		}
 
 		// Check custom header for API clients.
-		$header_password = $_SERVER['HTTP_X_WP_POST_PASSWORD'] ?? '';
+		$header_password = isset( $_SERVER['HTTP_X_WP_POST_PASSWORD'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_WP_POST_PASSWORD'] ) )
+			: '';
 		if ( ! empty( $header_password ) ) {
 			return $header_password === $post->post_password;
 		}

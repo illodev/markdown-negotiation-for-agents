@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -101,6 +105,7 @@ final class Container {
 
 		if ( ! isset( $this->factories[ $id ] ) ) {
 			throw new RuntimeException(
+				// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- $id is always a class FQCN, not user input.
 				sprintf( 'Service "%s" is not registered in the container.', $id )
 			);
 		}

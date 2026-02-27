@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Rest;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Cache\CacheManager;
 use IlloDev\MarkdownNegotiation\Contracts\ConverterInterface;
 use WP_Post;

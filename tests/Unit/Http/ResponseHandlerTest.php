@@ -139,12 +139,13 @@ final class ResponseHandlerTest extends TestCase {
 	/**
 	 * @test
 	 *
-	 * A request with a null-byte injected into the Accept header must return 400.
+	 * A request with an excessively long Accept header must return 400.
 	 */
-	public function it_sends_400_for_null_byte_in_accept_header(): void {
+	public function it_sends_400_for_very_long_accept_header_string(): void {
 		\Brain\Monkey\Functions\when( 'is_singular' )->justReturn( true );
 
-		$_SERVER['HTTP_ACCEPT'] = "text/markdown\0injection";
+		// 1025 bytes exceeds MAX_ACCEPT_LENGTH (1024).
+		$_SERVER['HTTP_ACCEPT'] = 'text/markdown, ' . str_repeat( 'a', 1025 );
 
 		\Brain\Monkey\Functions\when( 'http_response_code' )->alias(
 			static function ( int $code ): void {
@@ -157,7 +158,7 @@ final class ResponseHandlerTest extends TestCase {
 			$this->handler->handle_request();
 			$this->fail( 'Expected HttpExitException to be thrown.' );
 		} catch ( HttpExitException $e ) {
-			$this->assertSame( 400, $e->http_code, 'Should return HTTP 400 for null-byte Accept header.' );
+			$this->assertSame( 400, $e->http_code, 'Should return HTTP 400 for oversized Accept header.' );
 		}
 	}
 }

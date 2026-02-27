@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Multisite;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class NetworkHandler
  *

@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Cache;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Contracts\CacheInterface;
 
 /**
@@ -61,6 +65,7 @@ final class TransientDriver implements CacheInterface {
 	public function flush(): bool {
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Bulk transient cleanup.
 		$result = $wpdb->query(
 			$wpdb->prepare(
 				"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",

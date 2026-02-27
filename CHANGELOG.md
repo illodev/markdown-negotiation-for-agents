@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove `load_plugin_textdomain()` call — WordPress 4.6+ auto-loads translations for plugins hosted on WordPress.org
 - Update "Tested up to" from 6.7 to 6.9 in `readme.txt` to pass WordPress.org plugin check
+- Add direct file access protection (`defined( 'ABSPATH' )` guard) to all PHP files in `src/`
+- Replace `unlink()` with `wp_delete_file()` in `FileCacheDriver` and `uninstall.php`
+- Replace `is_writable()` with write-test approach in `FileCacheDriver::is_available()`
+- Sanitize all `$_SERVER` variable access with `wp_unslash()` + `sanitize_text_field()`
+- Use `$wpdb->prepare()` for all direct database queries in `uninstall.php` and deactivation hook
+- Add `phpcs:ignore` comments for intentional direct DB queries during cleanup operations
+- Prefix all global variables in `uninstall.php` with `jetstaa_mna_` per WPCS naming conventions
+- Escape `$id` in `Container` exception message with `phpcs:ignore` (internal FQCN, not user input)
+- Reduce `readme.txt` tags from 6 to 5 (WordPress.org limit)
 
 ### Added
 

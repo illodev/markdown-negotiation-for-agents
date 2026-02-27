@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Admin\SettingsPage;
 use IlloDev\MarkdownNegotiation\Admin\SettingsRegistrar;
 use IlloDev\MarkdownNegotiation\Admin\MetaBox;
