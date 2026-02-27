@@ -366,9 +366,6 @@ final class Plugin {
 	 * @return void
 	 */
 	private function register_hooks(): void {
-		// Load text domain.
-		add_action( 'init', array( $this, 'load_textdomain' ) );
-
 		// Only register frontend hooks if enabled.
 		if ( $this->setting( 'enabled', true ) ) {
 			/** @var ResponseHandler $response_handler */
@@ -441,19 +438,6 @@ final class Plugin {
 		// Add Link rel alternate header.
 		add_action( 'wp_head', array( $this, 'add_link_alternate' ) );
 		add_action( 'send_headers', array( $this, 'send_link_header' ) );
-	}
-
-	/**
-	 * Load plugin text domain for i18n.
-	 *
-	 * @return void
-	 */
-	public function load_textdomain(): void {
-		load_plugin_textdomain(
-			'markdown-negotiation-for-agents',
-			false,
-			dirname( JETSTAA_MNA_PLUGIN_BASENAME ) . '/languages/'
-		);
 	}
 
 	/**

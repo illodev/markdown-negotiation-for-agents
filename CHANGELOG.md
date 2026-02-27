@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Remove `load_plugin_textdomain()` call — WordPress 4.6+ auto-loads translations for plugins hosted on WordPress.org
+- Update "Tested up to" from 6.7 to 6.9 in `readme.txt` to pass WordPress.org plugin check
+
 ### Added
 
 - `CODE_OF_CONDUCT.md` — Contributor Covenant 2.1 code of conduct
