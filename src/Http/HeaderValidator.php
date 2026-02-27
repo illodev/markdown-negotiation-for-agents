@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Http;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class HeaderValidator
  *
@@ -62,7 +66,9 @@ final class HeaderValidator {
 	 */
 	public function validate_request(): bool {
 		// Check for suspicious Accept header injection attempts.
-		$accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+		$accept = isset( $_SERVER['HTTP_ACCEPT'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_ACCEPT'] ) )
+			: '';
 
 		if ( ! $this->validate_accept_header( $accept ) ) {
 			return false;

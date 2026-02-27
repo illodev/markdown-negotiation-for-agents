@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Http;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use WP_Post;
 
 /**

@@ -20,6 +20,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Security;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Contracts\SanitizerInterface;
 
 /**

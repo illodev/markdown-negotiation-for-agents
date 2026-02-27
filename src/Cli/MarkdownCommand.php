@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Cli;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Cache\CacheManager;
 use IlloDev\MarkdownNegotiation\Contracts\ConverterInterface;
 use IlloDev\MarkdownNegotiation\Converter\MarkdownConverter;

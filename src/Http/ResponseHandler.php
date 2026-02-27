@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Http;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Cache\CacheManager;
 use IlloDev\MarkdownNegotiation\Contracts\ConverterInterface;
 use IlloDev\MarkdownNegotiation\Contracts\NegotiatorInterface;
@@ -222,14 +226,18 @@ final class ResponseHandler {
 	 */
 	private function handle_conditional_request( string $etag, int|bool $modified_time ): void {
 		// Check If-None-Match.
-		$if_none_match = $_SERVER['HTTP_IF_NONE_MATCH'] ?? '';
+		$if_none_match = isset( $_SERVER['HTTP_IF_NONE_MATCH'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_IF_NONE_MATCH'] ) )
+			: '';
 		if ( $if_none_match && $if_none_match === $etag ) {
 			http_response_code( 304 );
 			exit;
 		}
 
 		// Check If-Modified-Since.
-		$if_modified_since = $_SERVER['HTTP_IF_MODIFIED_SINCE'] ?? '';
+		$if_modified_since = isset( $_SERVER['HTTP_IF_MODIFIED_SINCE'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) )
+			: '';
 		if ( $if_modified_since && $modified_time ) {
 			$since_time = strtotime( $if_modified_since );
 			if ( $since_time && $since_time >= $modified_time ) {

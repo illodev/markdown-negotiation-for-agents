@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace IlloDev\MarkdownNegotiation\Http;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use IlloDev\MarkdownNegotiation\Contracts\NegotiatorInterface;
 
 /**
@@ -146,7 +150,9 @@ final class ContentNegotiator implements NegotiatorInterface {
 	 */
 	private function get_accept_header(): string {
 		// Try standard $_SERVER.
-		$accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+		$accept = isset( $_SERVER['HTTP_ACCEPT'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_ACCEPT'] ) )
+			: '';
 
 		/**
 		 * Filter the Accept header value.
